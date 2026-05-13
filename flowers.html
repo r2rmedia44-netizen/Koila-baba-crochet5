@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Build Your Bouquet — Koila Baba Crochet</title>
+  <meta name="description" content="Design your own custom crochet bouquet. Choose flowers, wrappers and extras." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-brand">
+    <div class="brand-name">Koila Baba <span>Crochet</span></div>
+    <div class="brand-tagline">Handmade Bouquets</div>
+  </a>
+  <button class="navbar-toggle" id="menuToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="flowers.html">Build a Bouquet</a>
+  <a href="shop.html?cat=characters">Characters</a>
+  <a href="shop.html?cat=occasions">Occasions</a>
+  <a href="https://wa.me/918638733586?text=Hi!%20I%20want%20to%20order%20a%20crochet%20bouquet." target="_blank" class="menu-whatsapp">📲 Order on WhatsApp</a>
+</div>
+
+<!-- PAGE TITLE -->
+<div style="padding:28px 20px 0;text-align:center">
+  <div class="section-label">Custom Order</div>
+  <h1 style="font-family:var(--font-serif);font-size:1.8rem;font-weight:800;margin-top:6px">Build Your Bouquet</h1>
+  <p style="font-family:var(--font-italic);font-style:italic;font-size:0.9rem;color:var(--text-muted);margin-top:6px">Every petal, your choice.</p>
+</div>
+
+<!-- BUILDER CONTENT -->
+<div class="builder-page" style="padding-bottom:220px">
+
+  <!-- STEP 1: FLOWERS -->
+  <div class="builder-step">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <h2>Choose Your Flowers</h2>
+    </div>
+    <p class="step-subtitle">Select one or more blooms. Mix and match freely!</p>
+    <div class="builder-grid" id="flowersGrid">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+
+  <!-- STEP 2: WRAPPER -->
+  <div class="builder-step">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <h2>Choose a Wrapper / Base</h2>
+    </div>
+    <p class="step-subtitle">Pick one packaging style for your bouquet.</p>
+    <div class="builder-grid" id="wrappersGrid">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+
+  <!-- STEP 3: EXTRAS -->
+  <div class="builder-step">
+    <div class="step-header">
+      <div class="step-num">3</div>
+      <h2>Add Extras</h2>
+    </div>
+    <p class="step-subtitle">Optional add-ons to make it extra special.</p>
+    <div class="builder-grid" id="extrasGrid">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+
+</div>
+
+<!-- FIXED SUMMARY BAR -->
+<div class="builder-summary">
+  <div class="summary-title">Your Bouquet 💐</div>
+  <div class="summary-items" id="summaryItems">
+    <span class="summary-empty">Your bouquet is empty. Start selecting blooms ↑</span>
+  </div>
+  <div class="summary-total-row">
+    <span class="summary-total-label">Total</span>
+    <span class="summary-total-price" id="summaryTotal">₹0</span>
+  </div>
+  <button class="btn-whatsapp-full" id="orderBtn" onclick="placeOrder()">
+    <span>📲</span> Order on WhatsApp
+  </button>
+  <p style="font-size:0.68rem;color:var(--text-muted);text-align:center;margin-top:8px">We'll confirm availability &amp; delivery on WhatsApp.</p>
+</div>
+
+<div class="toast" id="globalToast"></div>
+<script src="script.js"></script>
+<script>
+let selectedFlowers = [];
+let selectedWrapper = null;
+let selectedExtras = [];
+
+function buildFlowersGrid() {
+  const grid = document.getElementById('flowersGrid');
+  grid.innerHTML = BUILDER_FLOWERS.map(f => `
+    <div class="builder-item" data-id="${f.id}" data-type="flower" onclick="toggleFlower('${f.id}')">
+      <div class="builder-item-icon">${f.emoji}</div>
+      <div class="builder-item-name">${f.name}</div>
+      <div class="builder-item-price">₹${f.price}</div>
+    </div>
+  `).join('');
+}
+
+function buildWrappersGrid() {
+  const grid = document.getElementById('wrappersGrid');
+  grid.innerHTML = BUILDER_WRAPPERS.map(w => `
+    <div class="builder-item" data-id="${w.id}" data-type="wrapper" onclick="selectWrapper('${w.id}')">
+      <div class="builder-item-icon">${w.emoji}</div>
+      <div class="builder-item-name">${w.name}</div>
+      <div class="builder-item-price">₹${w.price}</div>
+    </div>
+  `).join('');
+}
+
+function buildExtrasGrid() {
+  const grid = document.getElementById('extrasGrid');
+  grid.innerHTML = BUILDER_EXTRAS.map(e => `
+    <div class="builder-item" data-id="${e.id}" data-type="extra" onclick="toggleExtra('${e.id}')">
+      <div class="builder-item-icon">${e.emoji}</div>
+      <div class="builder-item-name">${e.name}</div>
+      <div class="builder-item-price">₹${e.price}</div>
+    </div>
+  `).join('');
+}
+
+function toggleFlower(id) {
+  const item = BUILDER_FLOWERS.find(f => f.id === id);
+  if (!item) return;
+  const idx = selectedFlowers.findIndex(f => f.id === id);
+  if (idx > -1) {
+    selectedFlowers.splice(idx, 1);
+  } else {
+    selectedFlowers.push(item);
+  }
+  document.querySelector(`.builder-item[data-id="${id}"][data-type="flower"]`).classList.toggle('selected', idx === -1);
+  updateSummary();
+}
+
+function selectWrapper(id) {
+  const item = BUILDER_WRAPPERS.find(w => w.id === id);
+  if (!item) return;
+  const wasSame = selectedWrapper && selectedWrapper.id === id;
+  document.querySelectorAll('.builder-item[data-type="wrapper"]').forEach(el => el.classList.remove('selected'));
+  if (wasSame) {
+    selectedWrapper = null;
+  } else {
+    selectedWrapper = item;
+    document.querySelector(`.builder-item[data-id="${id}"][data-type="wrapper"]`).classList.add('selected');
+  }
+  updateSummary();
+}
+
+function toggleExtra(id) {
+  const item = BUILDER_EXTRAS.find(e => e.id === id);
+  if (!item) return;
+  const idx = selectedExtras.findIndex(e => e.id === id);
+  if (idx > -1) {
+    selectedExtras.splice(idx, 1);
+  } else {
+    selectedExtras.push(item);
+  }
+  document.querySelector(`.builder-item[data-id="${id}"][data-type="extra"]`).classList.toggle('selected', idx === -1);
+  updateSummary();
+}
+
+function updateSummary() {
+  const summaryEl = document.getElementById('summaryItems');
+  const totalEl = document.getElementById('summaryTotal');
+
+  const all = [...selectedFlowers, ...(selectedWrapper ? [selectedWrapper] : []), ...selectedExtras];
+  const total = all.reduce((sum, i) => sum + i.price, 0);
+
+  if (all.length === 0) {
+    summaryEl.innerHTML = '<span class="summary-empty">Your bouquet is empty. Start selecting blooms ↑</span>';
+  } else {
+    summaryEl.innerHTML = all.map(i => `<span class="summary-item-tag">${i.emoji} ${i.name}</span>`).join('');
+  }
+
+  totalEl.textContent = '₹' + total;
+}
+
+function placeOrder() {
+  const all = [...selectedFlowers, ...(selectedWrapper ? [selectedWrapper] : []), ...selectedExtras];
+  if (all.length === 0) {
+    showToast('Please select at least one item!');
+    return;
+  }
+  const total = all.reduce((sum, i) => sum + i.price, 0);
+  openWhatsAppOrder({
+    flowers: selectedFlowers,
+    wrapper: selectedWrapper,
+    extras: selectedExtras,
+  }, total);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  buildFlowersGrid();
+  buildWrappersGrid();
+  buildExtrasGrid();
+});
+</script>
+</body>
+</html>

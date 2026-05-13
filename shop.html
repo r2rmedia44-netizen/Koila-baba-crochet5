@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop — Koila Baba Crochet</title>
+  <meta name="description" content="Browse all handcrafted crochet bouquets, characters, flowers, accessories and more." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="index.html" class="navbar-brand">
+    <div class="brand-name">Koila Baba <span>Crochet</span></div>
+    <div class="brand-tagline">Handmade Bouquets</div>
+  </a>
+  <button class="navbar-toggle" id="menuToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop</a>
+  <a href="flowers.html">Build a Bouquet</a>
+  <a href="shop.html?cat=characters">Characters</a>
+  <a href="shop.html?cat=occasions">Occasions</a>
+  <a href="https://wa.me/918638733586?text=Hi!%20I%20want%20to%20order%20a%20crochet%20bouquet." target="_blank" class="menu-whatsapp">📲 Order on WhatsApp</a>
+</div>
+
+<!-- SHOP HERO -->
+<div class="shop-hero">
+  <div class="section-label">Koila Baba Crochet</div>
+  <h1>Shop</h1>
+  <p>Handcrafted crochet pieces made with love<br>— browse all categories</p>
+</div>
+
+<!-- CATEGORY PILLS -->
+<div class="category-scroll-wrapper">
+  <div class="section-label" style="margin-bottom:14px">Browse by Category</div>
+  <div class="category-scroll" id="categoryScroll">
+    <div class="cat-pill active" data-cat="all">
+      <div class="cat-pill-icon">🌸</div>
+      <span class="cat-pill-label">All Items</span>
+    </div>
+    <div class="cat-pill" data-cat="characters">
+      <div class="cat-pill-icon">🐰</div>
+      <span class="cat-pill-label">Characters</span>
+    </div>
+    <div class="cat-pill" data-cat="bouquet">
+      <div class="cat-pill-icon">💐</div>
+      <span class="cat-pill-label">Bouquet</span>
+    </div>
+    <div class="cat-pill" data-cat="pipe-cleaner">
+      <div class="cat-pill-icon">🌺</div>
+      <span class="cat-pill-label">Pipe Cleaner</span>
+    </div>
+    <div class="cat-pill" data-cat="accessories">
+      <div class="cat-pill-icon">⭐</div>
+      <span class="cat-pill-label">Accessories</span>
+    </div>
+    <div class="cat-pill" data-cat="bags">
+      <div class="cat-pill-icon">👜</div>
+      <span class="cat-pill-label">Bags</span>
+    </div>
+    <div class="cat-pill" data-cat="charms">
+      <div class="cat-pill-icon">✨</div>
+      <span class="cat-pill-label">Charms</span>
+    </div>
+    <div class="cat-pill" data-cat="flowers">
+      <div class="cat-pill-icon">🌹</div>
+      <span class="cat-pill-label">Flowers</span>
+    </div>
+    <div class="cat-pill" data-cat="occasions">
+      <div class="cat-pill-icon">🎂</div>
+      <span class="cat-pill-label">Occasions</span>
+    </div>
+  </div>
+  <div class="category-dots" id="categoryDots"></div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="shop-products">
+  <div class="shop-products-header">
+    <h2 id="activeHeading">All Items</h2>
+    <span id="itemCount"></span>
+  </div>
+  <div class="products-grid" id="shopGrid">
+    <!-- Filled by JS -->
+  </div>
+  <div class="dont-see">
+    <h3>Don't see what you want?</h3>
+    <p>We take custom orders! Tell us what you'd like and we'll craft it just for you.</p>
+    <a href="https://wa.me/918638733586?text=Hi!%20I%20have%20a%20custom%20order%20request." target="_blank" class="btn-whatsapp-full" style="max-width:280px;margin:0 auto;display:flex">
+      <span>📲</span> Request Custom Order
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-brand-tagline">Handmade Bouquets</div>
+      <div class="brand-name">Koila Baba <span>Crochet</span></div>
+      <p>Every piece handcrafted with premium yarn and packed with love. A gift that truly lasts forever.</p>
+    </div>
+  </div>
+  <div class="footer-links-section">
+    <h4>Shop</h4>
+    <ul>
+      <li><a href="shop.html">Shop All</a></li>
+      <li><a href="flowers.html">Custom Builder</a></li>
+      <li><a href="shop.html?cat=characters">Characters</a></li>
+      <li><a href="shop.html?cat=occasions">Occasions</a></li>
+    </ul>
+  </div>
+  <div class="footer-links-section" style="margin-top:20px">
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="https://wa.me/918638733586" target="_blank">WhatsApp Us</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">© 2024 Koila Baba Crochet · Handmade with love</div>
+</footer>
+
+<div class="toast" id="globalToast"></div>
+<script src="script.js"></script>
+<script>
+const CAT_NAMES = {
+  all: 'All Items',
+  characters: 'Characters',
+  bouquet: 'Bouquet',
+  'pipe-cleaner': 'Pipe Cleaner Flowers',
+  accessories: 'Accessories',
+  bags: 'Bags',
+  charms: 'Charms',
+  flowers: 'Flowers',
+  occasions: 'Occasions',
+};
+
+let currentCat = 'all';
+
+function renderProducts(cat) {
+  const all = getProducts();
+  const filtered = cat === 'all' ? all : all.filter(p => p.category === cat);
+  const grid = document.getElementById('shopGrid');
+  document.getElementById('activeHeading').textContent = CAT_NAMES[cat] || 'All Items';
+  document.getElementById('itemCount').textContent = filtered.length + ' items';
+  grid.innerHTML = filtered.length
+    ? filtered.map(p => productCardHTML(p)).join('')
+    : '<div style="grid-column:1/-1;text-align:center;padding:40px 0;color:var(--text-muted);font-style:italic">No products in this category yet.</div>';
+}
+
+function buildDots() {
+  const pills = document.querySelectorAll('.cat-pill');
+  const dotsEl = document.getElementById('categoryDots');
+  dotsEl.innerHTML = '';
+  pills.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'category-dot' + (i === 0 ? ' active' : '');
+    dotsEl.appendChild(d);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Check URL param
+  const params = new URLSearchParams(window.location.search);
+  const catParam = params.get('cat');
+
+  buildDots();
+
+  const pills = document.querySelectorAll('.cat-pill');
+  const dots = document.querySelectorAll('.category-dot');
+
+  function activateCat(cat) {
+    currentCat = cat;
+    pills.forEach((p, i) => {
+      const isActive = p.dataset.cat === cat;
+      p.classList.toggle('active', isActive);
+      dots[i].classList.toggle('active', isActive);
+    });
+    renderProducts(cat);
+  }
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => activateCat(pill.dataset.cat));
+  });
+
+  if (catParam && CAT_NAMES[catParam]) {
+    activateCat(catParam);
+  } else {
+    renderProducts('all');
+  }
+});
+</script>
+</body>
+</html>
