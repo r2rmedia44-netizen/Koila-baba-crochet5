@@ -520,6 +520,7 @@ input, textarea, select { font-family: inherit; }
   max-width: 360px;
   margin: 0 auto 24px;
 }
+
 /* ===== WHATSAPP CTA ===== */
 .whatsapp-cta {
   padding: 48px 24px;
@@ -1174,4 +1175,4 @@ footer {
   .collections-grid { grid-template-columns: repeat(3, 1fr); }
   .products-grid { grid-template-columns: repeat(4, 1fr); }
   .builder-grid { grid-template-columns: repeat(4, 1fr); }
-}
+  }
