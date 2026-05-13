@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Koila Baba Crochet — Handmade Bouquets</title>
   <meta name="description" content="Premium handcrafted crochet bouquets. Blooms that never fade, feelings that last forever." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* ---- INDEX ONLY ---- */
-    .hero-line { height: 1px; background: var(--beige-mid); width: 48px; display: inline-block; margin: 0 8px; vertical-align: middle; }
-    .hero-divider-row { display: flex; align-items: center; justify-content: center; margin: 18px 0 12px; }
-    .featured-header { padding: 0 20px; }
-    .featured-header h2 { font-size: 1.5rem; }
-    .section-heading-center { text-align: center; padding: 0 20px; margin-bottom: 24px; }
-    .section-heading-center h2 { font-size: 1.8rem; }
-    .about-stat-row { display: flex; justify-content: center; gap: 32px; margin: 24px 0 16px; }
-    .about-stat { text-align: center; }
-    .about-stat-num { font-family: var(--font-serif); font-size: 2rem; font-weight: 800; color: var(--rust); line-height: 1; }
-    .about-stat-lbl { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-top: 4px; }
+    .hero-line{height:1px;background:#D4C4B0;width:48px;display:inline-block;margin:0 8px;vertical-align:middle}
+    .hero-divider-row{display:flex;align-items:center;justify-content:center;margin:18px 0 12px}
+    .about-stat-row{display:flex;justify-content:center;gap:32px;margin:24px 0 16px}
+    .about-stat{text-align:center}
+    .about-stat-num{font-family:'Playfair Display',serif;font-size:2rem;font-weight:800;color:#7D3120;line-height:1}
+    .about-stat-lbl{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:#9B8070;margin-top:4px}
   </style>
 </head>
 <body>
@@ -32,8 +29,6 @@
     <span></span><span></span><span></span>
   </button>
 </nav>
-
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">Home</a>
   <a href="shop.html">Shop</a>
@@ -46,9 +41,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="section-label">Handmade · One Stitch at a Time</div>
-  <div class="hero-divider-row">
-    <span class="hero-line"></span>
-  </div>
+  <div class="hero-divider-row"><span class="hero-line"></span></div>
   <h1 class="hero-title">
     Koila<br>
     <span class="italic">Baba</span><br>
@@ -101,7 +94,7 @@
   </div>
 </div>
 
-<!-- QUOTE SECTION -->
+<!-- QUOTE -->
 <div class="quote-section">
   <p class="quote-text">"Our flowers are crocheted with patience and love — each petal a tiny promise that this gift will outlast every season."</p>
   <p class="quote-author">— Koila Baba Crochet</p>
@@ -113,49 +106,35 @@
     <div class="section-label">Our Collections</div>
     <h2>What would you like?</h2>
     <div class="divider"><span class="divider-icon">◆ ◆ ◆</span></div>
-    <p style="font-family:var(--font-italic);font-style:italic;font-size:0.95rem;color:var(--text-muted)">From single blooms to full custom</p>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;color:#9B8070">From single blooms to full custom</p>
   </div>
   <div class="collections-grid">
     <div class="collection-card" onclick="window.location.href='shop.html?cat=flowers'">
       <div class="collection-card-image bg-beige">🌹</div>
-      <div class="collection-card-body">
-        <h3>Flowers</h3>
-        <p>Roses, peonies, daisies &amp; more — each crocheted by hand.</p>
-      </div>
+      <div class="collection-card-body"><h3>Flowers</h3><p>Roses, peonies, daisies &amp; more — each crocheted by hand.</p></div>
     </div>
     <div class="collection-card" onclick="window.location.href='flowers.html'">
       <div class="collection-card-image bg-rust">💐</div>
-      <div class="collection-card-body">
-        <h3>Custom Bouquet</h3>
-        <p>You pick the flowers, wrapper &amp; extras. We craft it.</p>
-      </div>
+      <div class="collection-card-body"><h3>Custom Bouquet</h3><p>You pick the flowers, wrapper &amp; extras. We craft it.</p></div>
     </div>
     <div class="collection-card" onclick="window.location.href='shop.html?cat=characters'">
       <div class="collection-card-image bg-beige">🐰</div>
-      <div class="collection-card-body">
-        <h3>Characters</h3>
-        <p>Adorable crocheted characters holding mini bouquets.</p>
-      </div>
+      <div class="collection-card-body"><h3>Characters</h3><p>Adorable crocheted characters holding mini bouquets.</p></div>
     </div>
     <div class="collection-card" onclick="window.location.href='shop.html?cat=occasions'">
       <div class="collection-card-image bg-rust">🎂</div>
-      <div class="collection-card-body">
-        <h3>Occasions</h3>
-        <p>Birthday, anniversary, graduation — gifts for every moment.</p>
-      </div>
+      <div class="collection-card-body"><h3>Occasions</h3><p>Birthday, anniversary, graduation — gifts for every moment.</p></div>
     </div>
   </div>
 </section>
 
 <!-- FEATURED PRODUCTS -->
 <section class="products-section">
-  <div class="featured-header" style="margin-bottom:20px">
+  <div style="margin-bottom:20px;padding:0 0">
     <div class="section-label">Best Sellers</div>
-    <h2 style="font-family:var(--font-serif);font-size:1.5rem;margin-top:4px">Featured Products</h2>
+    <h2 style="font-family:'Playfair Display',serif;font-size:1.5rem;margin-top:4px">Featured Products</h2>
   </div>
-  <div class="products-grid" id="featuredGrid">
-    <!-- Filled by JS -->
-  </div>
+  <div class="products-grid" id="featuredGrid"></div>
   <div style="text-align:center;margin-top:24px">
     <button class="btn-outline" onclick="window.location.href='shop.html'">View All Products →</button>
   </div>
@@ -166,18 +145,9 @@
   <div class="section-label">About Us</div>
   <h2>Crafted with Heart</h2>
   <div class="about-stat-row">
-    <div class="about-stat">
-      <div class="about-stat-num">34+</div>
-      <div class="about-stat-lbl">Products</div>
-    </div>
-    <div class="about-stat">
-      <div class="about-stat-num">100%</div>
-      <div class="about-stat-lbl">Handmade</div>
-    </div>
-    <div class="about-stat">
-      <div class="about-stat-num">∞</div>
-      <div class="about-stat-lbl">Lasting</div>
-    </div>
+    <div class="about-stat"><div class="about-stat-num">34+</div><div class="about-stat-lbl">Products</div></div>
+    <div class="about-stat"><div class="about-stat-num">100%</div><div class="about-stat-lbl">Handmade</div></div>
+    <div class="about-stat"><div class="about-stat-num">∞</div><div class="about-stat-lbl">Lasting</div></div>
   </div>
   <p>Every piece handcrafted with premium yarn and packed with love. A gift that truly lasts forever.</p>
 </section>
@@ -219,16 +189,104 @@
   <div class="footer-bottom">© 2024 Koila Baba Crochet · Handmade with love</div>
 </footer>
 
-<div class="toast" id="globalToast"></div>
-<script src="script.js"></script>
+<div class="toast" id="toast"></div>
+
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const products = getProducts();
-    // Show 6 featured products (mix of categories)
-    const featured = products.filter(p => ['characters','bouquet','flowers'].includes(p.category)).slice(0, 6);
-    const grid = document.getElementById('featuredGrid');
-    grid.innerHTML = featured.map(p => productCardHTML(p)).join('');
+/* ── DEFAULT PRODUCTS (must match admin.html exactly) ── */
+const DEFAULT_PRODUCTS = [
+  {id:1,name:"Crimson Rose",desc:"Deep red crocheted rose, handcrafted with care",emoji:"🌹",price:120,category:"flowers",tag:"FLOWER",img:null},
+  {id:2,name:"Blush Peony",desc:"Soft pink peony, beautifully layered petals",emoji:"🌸",price:140,category:"flowers",tag:"FLOWER",img:null},
+  {id:3,name:"Sunlit Daisy",desc:"Cheerful yellow daisy in premium yarn",emoji:"🌻",price:90,category:"flowers",tag:"FLOWER",img:null},
+  {id:4,name:"Lavender Bloom",desc:"Elegant lavender sprig, soothing and serene",emoji:"💜",price:110,category:"flowers",tag:"FLOWER",img:null},
+  {id:5,name:"Ivory Magnolia",desc:"Classic white magnolia, timeless beauty",emoji:"🤍",price:160,category:"flowers",tag:"FLOWER",img:null},
+  {id:6,name:"Wild Sunflower",desc:"Bold sunflower bloom full of warmth",emoji:"🌼",price:100,category:"flowers",tag:"FLOWER",img:null},
+  {id:7,name:"Blue Hydrangea",desc:"Clusters of blue blooms, uniquely crafted",emoji:"💙",price:130,category:"flowers",tag:"FLOWER",img:null},
+  {id:8,name:"Dusty Tulip",desc:"Vintage-toned tulip in muted hues",emoji:"🌷",price:95,category:"flowers",tag:"FLOWER",img:null},
+  {id:9,name:"Bunny Bouquet",desc:"Adorable bunny holding a spring flower arrangement",emoji:"🐰",price:380,category:"characters",tag:"CHARACTER",img:null},
+  {id:10,name:"Teddy Bear",desc:"Huggable bear holding a mini bouquet with love",emoji:"🧸",price:420,category:"characters",tag:"CHARACTER",img:null},
+  {id:11,name:"Ducky Friend",desc:"Sweet yellow duck with floral accessories",emoji:"🐥",price:350,category:"characters",tag:"CHARACTER",img:null},
+  {id:12,name:"Kitty Bloom",desc:"Cute cat character wrapped in yarn flowers",emoji:"🐱",price:390,category:"characters",tag:"CHARACTER",img:null},
+  {id:13,name:"Spring Dream Bouquet",desc:"A full bouquet of mixed crochet blooms",emoji:"💐",price:480,category:"bouquet",tag:"BOUQUET",img:null},
+  {id:14,name:"Bridal White Set",desc:"Elegant all-white bridal bouquet in premium yarn",emoji:"🤍",price:650,category:"bouquet",tag:"BOUQUET",img:null},
+  {id:15,name:"Sunset Arrangement",desc:"Warm oranges and pinks in a full bouquet",emoji:"🌅",price:520,category:"bouquet",tag:"BOUQUET",img:null},
+  {id:16,name:"Pipe Cleaner Bouquet",desc:"Mini mixed bouquet crafted from pipe cleaner flowers",emoji:"🌺",price:180,category:"pipe-cleaner",tag:"PIPE CLEANER",img:null},
+  {id:17,name:"Pipe Cleaner Lily",desc:"Elegant white lily crafted from pearl pipe cleaners",emoji:"🪷",price:60,category:"pipe-cleaner",tag:"PIPE CLEANER",img:null},
+  {id:18,name:"Rainbow PC Set",desc:"Colourful pipe cleaner flower set, 5 blooms",emoji:"🌈",price:240,category:"pipe-cleaner",tag:"PIPE CLEANER",img:null},
+  {id:19,name:"Floral Hair Pin",desc:"Delicate crochet flower hair accessory",emoji:"⭐",price:80,category:"accessories",tag:"ACCESSORY",img:null},
+  {id:20,name:"Bloom Keychain",desc:"Miniature rose bouquet keychain charm",emoji:"🌻",price:65,category:"accessories",tag:"ACCESSORY",img:null},
+  {id:21,name:"Petal Brooch",desc:"Wearable crochet flower brooch, gold pin",emoji:"✨",price:110,category:"accessories",tag:"ACCESSORY",img:null},
+  {id:22,name:"Mini Tote Bag",desc:"Crocheted mini tote with floral motif",emoji:"👜",price:350,category:"bags",tag:"BAG",img:null},
+  {id:23,name:"Drawstring Pouch",desc:"Cute yarn drawstring pouch for gifting",emoji:"🎁",price:180,category:"bags",tag:"BAG",img:null},
+  {id:24,name:"Rose Charm",desc:"Tiny crocheted rose charm for bags & keys",emoji:"🌹",price:45,category:"charms",tag:"CHARM",img:null},
+  {id:25,name:"Sunflower Charm",desc:"Bright sunflower charm, cheerful and cute",emoji:"🌻",price:45,category:"charms",tag:"CHARM",img:null},
+  {id:26,name:"Birthday Bloom Set",desc:"Festive crochet bouquet for birthdays",emoji:"🎂",price:320,category:"occasions",tag:"OCCASION",img:null},
+  {id:27,name:"Anniversary Special",desc:"Romantic red rose set for anniversaries",emoji:"❤️",price:580,category:"occasions",tag:"OCCASION",img:null},
+  {id:28,name:"Graduation Gift",desc:"Celebratory bouquet for graduates",emoji:"🎓",price:420,category:"occasions",tag:"OCCASION",img:null},
+];
+
+/* ── STORAGE ── */
+function getProducts() {
+  const s = localStorage.getItem('kbc_products');
+  if (s) return JSON.parse(s);
+  localStorage.setItem('kbc_products', JSON.stringify(DEFAULT_PRODUCTS));
+  return DEFAULT_PRODUCTS;
+}
+
+/* ── PRODUCT CARD — checks img first, falls back to emoji ── */
+function productCardHTML(p) {
+  const msg = encodeURIComponent(`Hi! I'd like to order: *${p.name}* (₹${p.price})\n\nPlease confirm availability and delivery details.`);
+  const waLink = `https://wa.me/918638733586?text=${msg}`;
+
+  const media = p.img
+    ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;display:block" />`
+    : `<span style="font-size:3.2rem">${p.emoji || '🌸'}</span>`;
+
+  return `
+    <div class="product-card">
+      <div class="product-card-image">
+        <span class="product-tag">${p.tag || p.category.toUpperCase()}</span>
+        ${media}
+      </div>
+      <div class="product-card-body">
+        <h3>${p.name}</h3>
+        <p>${p.desc || ''}</p>
+        <div class="product-card-footer">
+          <span class="product-price">₹${p.price}</span>
+          <a href="${waLink}" target="_blank" class="btn-whatsapp">
+            <span>📲</span> Order
+          </a>
+        </div>
+      </div>
+    </div>`;
+}
+
+/* ── NAVBAR ── */
+function initNavbar() {
+  const toggle = document.getElementById('menuToggle');
+  const menu = document.getElementById('mobileMenu');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('active');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
   });
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      toggle.classList.remove('active');
+      menu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  initNavbar();
+
+  const products = getProducts();
+  // Show 6 featured products — mix of categories
+  const featured = products.filter(p => ['characters','bouquet','flowers'].includes(p.category)).slice(0, 6);
+  document.getElementById('featuredGrid').innerHTML = featured.map(productCardHTML).join('');
+});
 </script>
 </body>
 </html>
