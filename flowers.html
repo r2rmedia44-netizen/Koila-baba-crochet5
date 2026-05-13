@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Build Your Bouquet — Koila Baba Crochet</title>
-  <meta name="description" content="Design your own custom crochet bouquet. Choose flowers, wrappers and extras." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600;1,700&family=Jost:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -31,8 +32,8 @@
 <!-- PAGE TITLE -->
 <div style="padding:28px 20px 0;text-align:center">
   <div class="section-label">Custom Order</div>
-  <h1 style="font-family:var(--font-serif);font-size:1.8rem;font-weight:800;margin-top:6px">Build Your Bouquet</h1>
-  <p style="font-family:var(--font-italic);font-style:italic;font-size:0.9rem;color:var(--text-muted);margin-top:6px">Every petal, your choice.</p>
+  <h1 style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:800;margin-top:6px">Build Your Bouquet</h1>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:#9B8070;margin-top:6px">Every petal, your choice.</p>
 </div>
 
 <!-- BUILDER CONTENT -->
@@ -45,9 +46,7 @@
       <h2>Choose Your Flowers</h2>
     </div>
     <p class="step-subtitle">Select one or more blooms. Mix and match freely!</p>
-    <div class="builder-grid" id="flowersGrid">
-      <!-- Filled by JS -->
-    </div>
+    <div class="builder-grid" id="flowersGrid"></div>
   </div>
 
   <!-- STEP 2: WRAPPER -->
@@ -57,9 +56,7 @@
       <h2>Choose a Wrapper / Base</h2>
     </div>
     <p class="step-subtitle">Pick one packaging style for your bouquet.</p>
-    <div class="builder-grid" id="wrappersGrid">
-      <!-- Filled by JS -->
-    </div>
+    <div class="builder-grid" id="wrappersGrid"></div>
   </div>
 
   <!-- STEP 3: EXTRAS -->
@@ -69,9 +66,7 @@
       <h2>Add Extras</h2>
     </div>
     <p class="step-subtitle">Optional add-ons to make it extra special.</p>
-    <div class="builder-grid" id="extrasGrid">
-      <!-- Filled by JS -->
-    </div>
+    <div class="builder-grid" id="extrasGrid"></div>
   </div>
 
 </div>
@@ -86,126 +81,165 @@
     <span class="summary-total-label">Total</span>
     <span class="summary-total-price" id="summaryTotal">₹0</span>
   </div>
-  <button class="btn-whatsapp-full" id="orderBtn" onclick="placeOrder()">
+  <button class="btn-whatsapp-full" onclick="placeOrder()">
     <span>📲</span> Order on WhatsApp
   </button>
-  <p style="font-size:0.68rem;color:var(--text-muted);text-align:center;margin-top:8px">We'll confirm availability &amp; delivery on WhatsApp.</p>
+  <p style="font-size:.68rem;color:#9B8070;text-align:center;margin-top:8px">We'll confirm availability &amp; delivery on WhatsApp.</p>
 </div>
 
-<div class="toast" id="globalToast"></div>
-<script src="script.js"></script>
+<div class="toast" id="toast"></div>
+
 <script>
+/* ── DEFAULT DATA (mirrors custom.html defaults) ── */
+const DEFAULT_FLOWERS = [
+  {id:"bf1",name:"Crimson Rose",emoji:"🌹",price:120,img:null},
+  {id:"bf2",name:"Blush Peony",emoji:"🌸",price:140,img:null},
+  {id:"bf3",name:"Sunlit Daisy",emoji:"🌻",price:90,img:null},
+  {id:"bf4",name:"Lavender Bloom",emoji:"💜",price:110,img:null},
+  {id:"bf5",name:"Ivory Magnolia",emoji:"🤍",price:160,img:null},
+  {id:"bf6",name:"Wild Sunflower",emoji:"🌼",price:100,img:null},
+  {id:"bf7",name:"Blue Hydrangea",emoji:"💙",price:130,img:null},
+  {id:"bf8",name:"Dusty Tulip",emoji:"🌷",price:95,img:null},
+  {id:"bf9",name:"Peach Lily",emoji:"🪷",price:115,img:null},
+  {id:"bf10",name:"White Jasmine",emoji:"🌿",price:85,img:null},
+];
+const DEFAULT_WRAPPERS = [
+  {id:"bw1",name:"Kraft Paper",emoji:"📜",price:50,img:null},
+  {id:"bw2",name:"Satin Ribbon",emoji:"🎀",price:80,img:null},
+  {id:"bw3",name:"Jute Twine",emoji:"🪢",price:60,img:null},
+  {id:"bw4",name:"Velvet Wrap",emoji:"🟥",price:100,img:null},
+  {id:"bw5",name:"Gift Box",emoji:"📦",price:120,img:null},
+  {id:"bw6",name:"Lace Wrap",emoji:"🤍",price:90,img:null},
+];
+const DEFAULT_EXTRAS = [
+  {id:"be1",name:"Gold Bow",emoji:"🎗️",price:40,img:null},
+  {id:"be2",name:"Tissue Paper",emoji:"📄",price:25,img:null},
+  {id:"be3",name:"Greeting Card",emoji:"💌",price:55,img:null},
+  {id:"be4",name:"Baby's Breath",emoji:"🤍",price:55,img:null},
+  {id:"be5",name:"Dried Leaves",emoji:"🍂",price:45,img:null},
+  {id:"be6",name:"Scent Sachet",emoji:"🌿",price:60,img:null},
+];
+
+/* ── STORAGE — reads from localStorage set by custom.html ── */
+function getOrDefault(key, defaults) {
+  const s = localStorage.getItem(key);
+  if (s) return JSON.parse(s);
+  localStorage.setItem(key, JSON.stringify(defaults));
+  return defaults;
+}
+function getFlowers()  { return getOrDefault('kbc_builder_flowers',  DEFAULT_FLOWERS);  }
+function getWrappers() { return getOrDefault('kbc_builder_wrappers', DEFAULT_WRAPPERS); }
+function getExtras()   { return getOrDefault('kbc_builder_extras',   DEFAULT_EXTRAS);   }
+
+/* ── STATE ── */
 let selectedFlowers = [];
 let selectedWrapper = null;
-let selectedExtras = [];
+let selectedExtras  = [];
 
-function buildFlowersGrid() {
-  const grid = document.getElementById('flowersGrid');
-  grid.innerHTML = BUILDER_FLOWERS.map(f => `
-    <div class="builder-item" data-id="${f.id}" data-type="flower" onclick="toggleFlower('${f.id}')">
-      <div class="builder-item-icon">${f.emoji}</div>
-      <div class="builder-item-name">${f.name}</div>
-      <div class="builder-item-price">₹${f.price}</div>
-    </div>
-  `).join('');
+/* ── BUILD ITEM HTML — checks img first, falls back to emoji ── */
+function builderItemHTML(item, type) {
+  const media = item.img
+    ? `<img src="${item.img}" alt="${item.name}" style="width:56px;height:56px;object-fit:cover;border-radius:8px;display:block" />`
+    : `<span class="builder-item-icon">${item.emoji || '🌸'}</span>`;
+
+  return `
+    <div class="builder-item" data-id="${item.id}" data-type="${type}" onclick="toggleItem('${type}','${item.id}')">
+      ${media}
+      <div class="builder-item-name">${item.name}</div>
+      <div class="builder-item-price">₹${item.price}</div>
+    </div>`;
 }
 
-function buildWrappersGrid() {
-  const grid = document.getElementById('wrappersGrid');
-  grid.innerHTML = BUILDER_WRAPPERS.map(w => `
-    <div class="builder-item" data-id="${w.id}" data-type="wrapper" onclick="selectWrapper('${w.id}')">
-      <div class="builder-item-icon">${w.emoji}</div>
-      <div class="builder-item-name">${w.name}</div>
-      <div class="builder-item-price">₹${w.price}</div>
-    </div>
-  `).join('');
+/* ── RENDER GRIDS ── */
+function buildGrids() {
+  document.getElementById('flowersGrid').innerHTML  = getFlowers().map(f => builderItemHTML(f, 'flower')).join('');
+  document.getElementById('wrappersGrid').innerHTML = getWrappers().map(w => builderItemHTML(w, 'wrapper')).join('');
+  document.getElementById('extrasGrid').innerHTML   = getExtras().map(e => builderItemHTML(e, 'extra')).join('');
 }
 
-function buildExtrasGrid() {
-  const grid = document.getElementById('extrasGrid');
-  grid.innerHTML = BUILDER_EXTRAS.map(e => `
-    <div class="builder-item" data-id="${e.id}" data-type="extra" onclick="toggleExtra('${e.id}')">
-      <div class="builder-item-icon">${e.emoji}</div>
-      <div class="builder-item-name">${e.name}</div>
-      <div class="builder-item-price">₹${e.price}</div>
-    </div>
-  `).join('');
-}
-
-function toggleFlower(id) {
-  const item = BUILDER_FLOWERS.find(f => f.id === id);
-  if (!item) return;
-  const idx = selectedFlowers.findIndex(f => f.id === id);
-  if (idx > -1) {
-    selectedFlowers.splice(idx, 1);
-  } else {
-    selectedFlowers.push(item);
+/* ── TOGGLE LOGIC ── */
+function toggleItem(type, id) {
+  if (type === 'flower') {
+    const item = getFlowers().find(f => f.id === id);
+    if (!item) return;
+    const idx = selectedFlowers.findIndex(f => f.id === id);
+    if (idx > -1) { selectedFlowers.splice(idx, 1); }
+    else { selectedFlowers.push(item); }
+    document.querySelector(`.builder-item[data-id="${id}"][data-type="flower"]`).classList.toggle('selected', idx === -1);
   }
-  document.querySelector(`.builder-item[data-id="${id}"][data-type="flower"]`).classList.toggle('selected', idx === -1);
-  updateSummary();
-}
-
-function selectWrapper(id) {
-  const item = BUILDER_WRAPPERS.find(w => w.id === id);
-  if (!item) return;
-  const wasSame = selectedWrapper && selectedWrapper.id === id;
-  document.querySelectorAll('.builder-item[data-type="wrapper"]').forEach(el => el.classList.remove('selected'));
-  if (wasSame) {
-    selectedWrapper = null;
-  } else {
-    selectedWrapper = item;
-    document.querySelector(`.builder-item[data-id="${id}"][data-type="wrapper"]`).classList.add('selected');
+  else if (type === 'wrapper') {
+    const item = getWrappers().find(w => w.id === id);
+    if (!item) return;
+    const wasSame = selectedWrapper && selectedWrapper.id === id;
+    document.querySelectorAll('.builder-item[data-type="wrapper"]').forEach(el => el.classList.remove('selected'));
+    selectedWrapper = wasSame ? null : item;
+    if (!wasSame) document.querySelector(`.builder-item[data-id="${id}"][data-type="wrapper"]`).classList.add('selected');
+  }
+  else if (type === 'extra') {
+    const item = getExtras().find(e => e.id === id);
+    if (!item) return;
+    const idx = selectedExtras.findIndex(e => e.id === id);
+    if (idx > -1) { selectedExtras.splice(idx, 1); }
+    else { selectedExtras.push(item); }
+    document.querySelector(`.builder-item[data-id="${id}"][data-type="extra"]`).classList.toggle('selected', idx === -1);
   }
   updateSummary();
 }
 
-function toggleExtra(id) {
-  const item = BUILDER_EXTRAS.find(e => e.id === id);
-  if (!item) return;
-  const idx = selectedExtras.findIndex(e => e.id === id);
-  if (idx > -1) {
-    selectedExtras.splice(idx, 1);
-  } else {
-    selectedExtras.push(item);
-  }
-  document.querySelector(`.builder-item[data-id="${id}"][data-type="extra"]`).classList.toggle('selected', idx === -1);
-  updateSummary();
-}
-
+/* ── SUMMARY ── */
 function updateSummary() {
-  const summaryEl = document.getElementById('summaryItems');
-  const totalEl = document.getElementById('summaryTotal');
-
   const all = [...selectedFlowers, ...(selectedWrapper ? [selectedWrapper] : []), ...selectedExtras];
   const total = all.reduce((sum, i) => sum + i.price, 0);
-
-  if (all.length === 0) {
-    summaryEl.innerHTML = '<span class="summary-empty">Your bouquet is empty. Start selecting blooms ↑</span>';
-  } else {
-    summaryEl.innerHTML = all.map(i => `<span class="summary-item-tag">${i.emoji} ${i.name}</span>`).join('');
-  }
-
-  totalEl.textContent = '₹' + total;
+  const el = document.getElementById('summaryItems');
+  el.innerHTML = all.length
+    ? all.map(i => `<span class="summary-item-tag">${i.emoji || '🌸'} ${i.name}</span>`).join('')
+    : '<span class="summary-empty">Your bouquet is empty. Start selecting blooms ↑</span>';
+  document.getElementById('summaryTotal').textContent = '₹' + total;
 }
 
+/* ── WHATSAPP ORDER ── */
 function placeOrder() {
   const all = [...selectedFlowers, ...(selectedWrapper ? [selectedWrapper] : []), ...selectedExtras];
-  if (all.length === 0) {
-    showToast('Please select at least one item!');
-    return;
-  }
+  if (all.length === 0) { showToast('Please select at least one item!'); return; }
   const total = all.reduce((sum, i) => sum + i.price, 0);
-  openWhatsAppOrder({
-    flowers: selectedFlowers,
-    wrapper: selectedWrapper,
-    extras: selectedExtras,
-  }, total);
+  const wa = '918638733586';
+  let msg = `Hello! I'd like to place a custom bouquet order:\n\n`;
+  if (selectedFlowers.length)  msg += `🌸 *Flowers:* ${selectedFlowers.map(f => f.name).join(', ')}\n`;
+  if (selectedWrapper)          msg += `🎁 *Wrapper:* ${selectedWrapper.name}\n`;
+  if (selectedExtras.length)   msg += `✨ *Extras:* ${selectedExtras.map(e => e.name).join(', ')}\n`;
+  msg += `\n💰 *Total:* ₹${total}\n\nPlease confirm availability and delivery!`;
+  window.open(`https://wa.me/${wa}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
+/* ── TOAST ── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ── NAVBAR ── */
+function initNavbar() {
+  const toggle = document.getElementById('menuToggle');
+  const menu   = document.getElementById('mobileMenu');
+  toggle.addEventListener('click', () => {
+    toggle.classList.toggle('active');
+    menu.classList.toggle('open');
+    document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  });
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      toggle.classList.remove('active');
+      menu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+}
+
+/* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
-  buildFlowersGrid();
-  buildWrappersGrid();
-  buildExtrasGrid();
+  initNavbar();
+  buildGrids();
 });
 </script>
 </body>
