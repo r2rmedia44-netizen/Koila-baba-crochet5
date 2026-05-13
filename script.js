@@ -180,3 +180,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // Ensure default products are seeded
   getProducts();
 });
+   
